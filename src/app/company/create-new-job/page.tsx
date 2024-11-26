@@ -5,9 +5,10 @@ import Grid from '@mui/material/Grid2';
 import { TextField } from '@mui/material';
 import CompanyHeader from '@/components/companyHeader';
 import { addDoc, collection } from 'firebase/firestore';
-import { auth, db } from '@/firebase/firebaseConfig';
+import { auth, db, storage } from '@/firebase/firebaseConfig';
 import { Textarea } from '@mui/joy';
 import Footer from '@/components/footer';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 
 export default function CreateNewJob() {
@@ -23,7 +24,7 @@ export default function CreateNewJob() {
 
 
 
-
+    // button function 
     const postJob = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         saveJobsInFireStore();
@@ -34,28 +35,62 @@ export default function CreateNewJob() {
         setSalaryRange("")
         setAddress("")
         setOtherReq("")
-
+        setCompanyLogo(null);
     }
 
-    const saveJobsInFireStore = async () => {
 
+    // save data in firestore
+    const saveJobsInFireStore = async () => {
         const currentUser = auth.currentUser;
         try {
-            const jobDetail = {
-                userUid: currentUser?.uid,
-                jobPosition,
-                qualification,
-                shortDetail,
-                jobType,
-                salaryRange,
-                address,
-                otherReq
+            let logoUrl = null
+            if (companyLogo) {
+                logoUrl = await uploadImageToCloudinary(companyLogo)
+                console.log(logoUrl);
             }
-            const docRef = collection(db, "Jobs")
+            const jobDetail = {
+                userUid: currentUser?.uid, jobPosition, qualification, shortDetail, jobType, salaryRange, address, otherReq, companyLogo: logoUrl || ""
+            };
+            const docRef = collection(db, "jobs")
             await addDoc(docRef, jobDetail)
         } catch (error) {
             console.log(error);
             console.log(companyLogo);
+        }
+    }
+
+
+    // save image in storage and getting url
+
+    const uploadImageToCloudinary = async (imageFile: File) => {
+        const cloudName = "needy";
+        const uploadPreset = "ml_default";
+
+        if (!imageFile) {
+            console.log("No image file provided");
+
+        }
+        try {
+            const data = new FormData();
+            data.append("file", imageFile);
+            data.append("upload_preset", uploadPreset);
+            data.append("folder", "company_jobs")
+
+            console.log("data sent:", data);
+
+
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: "POST",
+                body: data,
+            })
+            const result = await response.json();
+            console.log(result);
+
+            console.log(result.secure_url);
+            return result.secure_url;
+        } catch (error) {
+            console.log("Cloudinary upload error: ", error);
+            throw error;
 
         }
     }
