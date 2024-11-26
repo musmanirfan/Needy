@@ -5,10 +5,10 @@ import Grid from '@mui/material/Grid2';
 import { TextField } from '@mui/material';
 import CompanyHeader from '@/components/companyHeader';
 import { addDoc, collection } from 'firebase/firestore';
-import { auth, db, storage } from '@/firebase/firebaseConfig';
+import { auth, db } from '@/firebase/firebaseConfig';
 import { Textarea } from '@mui/joy';
 import Footer from '@/components/footer';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useRouter } from 'next/navigation';
 
 
 export default function CreateNewJob() {
@@ -22,20 +22,25 @@ export default function CreateNewJob() {
     const [address, setAddress] = useState("")
     const [otherReq, setOtherReq] = useState("")
 
+    const route = useRouter()
+
 
 
     // button function 
     const postJob = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         saveJobsInFireStore();
-        setJobPosition("")
-        setQualification("")
-        setShortDetail("")
-        setJobType("")
-        setSalaryRange("")
-        setAddress("")
-        setOtherReq("")
+        setCompanyName("");
+        setJobPosition("");
+        setQualification("");
+        setShortDetail("");
+        setJobType("");
+        setSalaryRange("");
+        setAddress("");
+        setOtherReq("");
         setCompanyLogo(null);
+
+        route.push("/");
     }
 
 
@@ -49,7 +54,7 @@ export default function CreateNewJob() {
                 console.log(logoUrl);
             }
             const jobDetail = {
-                userUid: currentUser?.uid, jobPosition, qualification, shortDetail, jobType, salaryRange, address, otherReq, companyLogo: logoUrl || ""
+                companyName, userUid: currentUser?.uid, jobPosition, qualification, shortDetail, jobType, salaryRange, address, otherReq, companyLogo: logoUrl || "", createdAt: new Date()
             };
             const docRef = collection(db, "jobs")
             await addDoc(docRef, jobDetail)
@@ -104,18 +109,19 @@ export default function CreateNewJob() {
                     <Grid container spacing={3}>
                         <TextField className='w-[49%]' id="outlined-basic" label="Company Name" variant="outlined" value={companyName} onChange={e => setCompanyName(e.target.value)} />
                         <input
+                            required
                             type='file'
                             className='w-[48%] border border-[#C4C4C4] my-auto py-3 pl-2'
                             placeholder='Company Image'
                             id="image"
                             accept="image/*"
                             onChange={e => setCompanyLogo(e.target.files?.[0] ?? null)} />
-                        <TextField className='w-[49%]' id="outlined-basic" label="Job Position" variant="outlined" value={jobPosition} onChange={e => setJobPosition(e.target.value)} />
-                        <TextField className='w-[48%]' id="outlined-basic" label="Qualification" variant="outlined" value={qualification} onChange={e => setQualification(e.target.value)} />
-                        <TextField className='w-full' id="outlined-basic" label="Short Detail" variant="outlined" value={shortDetail} onChange={e => setShortDetail(e.target.value)} />
-                        <TextField className='w-[49%]' id="outlined-basic" label="Job Type" variant="outlined" value={jobType} onChange={e => setJobType(e.target.value)} />
-                        <TextField className='w-[48%]' id="outlined-basic" label="Salary Range" variant="outlined" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} />
-                        <TextField className='w-full' id="outlined-basic" label="Company Address" variant="outlined" value={address} onChange={e => setAddress(e.target.value)} />
+                        <TextField required className='w-[49%]' id="outlined-basic" label="Job Position" variant="outlined" value={jobPosition} onChange={e => setJobPosition(e.target.value)} />
+                        <TextField required className='w-[48%]' id="outlined-basic" label="Qualification" variant="outlined" value={qualification} onChange={e => setQualification(e.target.value)} />
+                        <TextField required className='w-full' id="outlined-basic" label="Short Detail" variant="outlined" value={shortDetail} onChange={e => setShortDetail(e.target.value)} />
+                        <TextField required className='w-[49%]' id="outlined-basic" label="Job Type" variant="outlined" value={jobType} onChange={e => setJobType(e.target.value)} />
+                        <TextField required className='w-[48%]' id="outlined-basic" label="Salary Range" variant="outlined" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} />
+                        <TextField required className='w-full' id="outlined-basic" label="Company Address" variant="outlined" value={address} onChange={e => setAddress(e.target.value)} />
                         <Textarea style={{ width: '100%' }} minRows={4} placeholder='Enter your Full Description..'
                             value={otherReq}
                             onChange={e => setOtherReq(e.target.value)}
