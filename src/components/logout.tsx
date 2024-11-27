@@ -11,5 +11,6 @@ export const logOutFunc = async () => {
         route.push("/signup");
     } catch (e) {
         console.log(e);
+        toast.error("dubara kro")
     }
 }

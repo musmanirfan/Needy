@@ -14,8 +14,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/firebase/firebaseConfig';
+import { toast } from 'react-toastify';
 
 const pages = [
     {
@@ -40,8 +43,19 @@ const settings = [
 function CompanyHeader() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
     const route = useRouter();
+
+    const logOutFunc = async () => {
+        try {
+            await signOut(auth);
+            toast.success("LogOut Successfully");
+            route.push("/signup");
+        } catch (e) {
+            console.log(e);
+            toast.error("dubara kro")
+        }
+    }
+
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -68,7 +82,7 @@ function CompanyHeader() {
                         noWrap
                         component="a"
                         className='cursor-pointer'
-                        onClick={()=>{route.push("/company")}}
+                        onClick={() => { route.push("/company") }}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -89,7 +103,7 @@ function CompanyHeader() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            // color="inherit"
+                        // color="inherit"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -177,6 +191,7 @@ function CompanyHeader() {
                                     </Link>
                                 </MenuItem>
                             ))}
+                            <button onClick={logOutFunc} className='text-center w-full underline hover:text-red-500'>Log Out</button>
                         </Menu>
                     </Box>
                 </Toolbar>
