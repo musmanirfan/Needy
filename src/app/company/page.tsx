@@ -60,11 +60,6 @@ export default function Company() {
   }
 
 
-
-  // if (loading) {
-  //   return <p>Loading</p>
-  // }
-  // const { jobs } = useJobContext()!;
   return (
     <>
       <CompanyHeader />

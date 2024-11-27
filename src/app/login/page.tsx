@@ -9,10 +9,10 @@ export default function page() {
 
     const login = async (email: string, password: string) => {
         try {
-            console.log(email, password);
             const userCrediential = await signInWithEmailAndPassword  (auth, email, password);
             const userData = userCrediential.user;
             console.log(userData, "userData");
+            console.log(email, password);   
         } catch (e) {
             console.log(e);
         }

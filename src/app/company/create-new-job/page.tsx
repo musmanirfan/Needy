@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Grid from '@mui/material/Grid2';
-import { TextField } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import CompanyHeader from '@/components/companyHeader';
 import { addDoc, collection } from 'firebase/firestore';
 import { auth, db } from '@/firebase/firebaseConfig';
@@ -119,7 +119,38 @@ export default function CreateNewJob() {
                         <TextField required className='w-[49%]' id="outlined-basic" label="Job Position" variant="outlined" value={jobPosition} onChange={e => setJobPosition(e.target.value)} />
                         <TextField required className='w-[48%]' id="outlined-basic" label="Qualification" variant="outlined" value={qualification} onChange={e => setQualification(e.target.value)} />
                         <TextField required className='w-full' id="outlined-basic" label="Short Detail" variant="outlined" value={shortDetail} onChange={e => setShortDetail(e.target.value)} />
-                        <TextField required className='w-[49%]' id="outlined-basic" label="Job Type" variant="outlined" value={jobType} onChange={e => setJobType(e.target.value)} />
+                        {/* <Select
+                            className='w-[49%]'
+                            labelId="job-type-label"
+                            id="job-type-select"
+                            value={jobType}
+                            label="Job Type"
+                            onChange={(e) => setJobType(e.target.value)}
+                            defaultValue='jobType'
+                        // renderValue={(selected) => {
+                        //     if (!selected) {
+                        //         return <em>Job Type</em>;
+                        //     }
+                        //     return selected;
+                        // }}
+                        >
+                            <MenuItem disabled defaultValue="Job Type" value=""><em>Job Type</em></MenuItem>
+                            <MenuItem value="full time">Full Time</MenuItem>
+                            <MenuItem value="part time">Part Time</MenuItem>
+                            <MenuItem value="remote">Remote</MenuItem>
+                        </Select> */}
+                        <FormControl variant="outlined" className="w-full max-w-xs">
+                            <InputLabel>Filter</InputLabel>
+                            <Select
+                                value={jobType}
+                                onChange={(e) => setJobType(e.target.value)}
+                                label="Filter"
+                            >
+                                <MenuItem value="full time">Full Time</MenuItem>
+                                <MenuItem value="part time">Part Time</MenuItem>
+                                <MenuItem value="remote">Remote</MenuItem>
+                            </Select>
+                        </FormControl>
                         <TextField required className='w-[48%]' id="outlined-basic" label="Salary Range" variant="outlined" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} />
                         <TextField required className='w-full' id="outlined-basic" label="Company Address" variant="outlined" value={address} onChange={e => setAddress(e.target.value)} />
                         <Textarea style={{ width: '100%' }} minRows={4} placeholder='Enter your Full Description..'
