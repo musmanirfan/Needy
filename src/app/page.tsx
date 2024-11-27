@@ -1,9 +1,10 @@
+import { CircularProgress } from "@mui/material";
 
 
 export default function Home() {
   return (
-    <>
-    <h1>Hello World</h1>
-    </>
+    <div className="w-full h-[100vh] flex items-center justify-center">
+      <CircularProgress disableShrink />;
+    </div>
   );
 }

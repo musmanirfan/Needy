@@ -4,6 +4,7 @@ import CompanyHeader from '@/components/companyHeader';
 import { checkDateDifference } from '@/components/timeStamps';
 import { useJobContext } from '@/context/jobContext';
 import { db } from '@/firebase/firebaseConfig';
+import { CircularProgress } from '@mui/material';
 import { collection, getDocs, Timestamp } from 'firebase/firestore';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
@@ -32,7 +33,7 @@ export default function Company() {
     (async () => {
       try {
         const fetchedJobs = await fetchJobsFromFireStore();
-        setJobs(fetchedJobs)
+        setJobs(fetchedJobs!)
       } catch (error) {
         console.log("Error fetching Jobs", error);
       } finally {
@@ -92,14 +93,16 @@ export default function Company() {
                   <div className="">Job Type<span className="ml-2 mr-3 rounded-full bg-green-100 px-2 py-0.5 text-green-900">{jobType}</span></div>
                   <div className="">Salary<span className="ml-2 mr-3 rounded-full bg-blue-100 px-2 py-0.5 text-blue-900">{salaryRange}</span></div>
                 </div>
-                <p className='mt-3 text-sm'>Posted: {status}</p>
+                <p className='mt-3 text-sm text-gray-500'>Posted: <span className='ml-2 mr-3 rounded-full bg-blue-100 px-2 py-0.5 text-blue-900'>{status}</span></p>
               </div>
             </div>
           )
         })}
         </div>
       ) : (
-        <p className='w-[100%] h-[100vh] mx-auto mt-[120px] text-center'>Loading...</p>
+        <div className="w-full h-[100vh] flex items-center justify-center">
+          <CircularProgress disableShrink />;
+        </div>
       )}
     </>
 

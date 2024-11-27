@@ -15,6 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const pages = [
     {
@@ -22,10 +23,10 @@ const pages = [
         link: "#"
     }, {
         MyJobs: "Post a Job",
-        link: "company/create-new-job"
+        link: "/company/create-new-job"
     },
     {
-        MyJobs: "My Jobs",
+        MyJobs: "Applayers Applications",
         link: "#"
     }
 ];
@@ -39,6 +40,8 @@ const settings = [
 function CompanyHeader() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+    const route = useRouter();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -57,21 +60,22 @@ function CompanyHeader() {
 
     return (
         <AppBar position="fixed">
-            <Container sx={{ backgroundColor: "#926c00" }} maxWidth="xl">
+            <Container className='bg-[#926c00]' maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        className='cursor-pointer'
+                        onClick={()=>{route.push("/company")}}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'inherit',
+                            // color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
@@ -85,7 +89,7 @@ function CompanyHeader() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
+                            // color="inherit"
                         >
                             <MenuIcon />
                         </IconButton>
@@ -125,7 +129,7 @@ function CompanyHeader() {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
-                            color: 'inherit',
+                            // color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
