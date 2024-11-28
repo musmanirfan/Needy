@@ -4,11 +4,12 @@ import React, { useState } from 'react'
 import Grid from '@mui/material/Grid2';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import CompanyHeader from '@/components/companyHeader';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase/firebaseConfig';
-import { Textarea } from '@mui/joy';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import { toast } from 'react-toastify';
 
 
 export default function CreateNewJob() {
@@ -56,11 +57,13 @@ export default function CreateNewJob() {
             const jobDetail = {
                 companyName, userUid: currentUser?.uid, jobPosition, qualification, shortDetail, jobType, salaryRange, address, otherReq, companyLogo: logoUrl || "", createdAt: new Date()
             };
-            const docRef = collection(db, "jobs")
-            await addDoc(docRef, jobDetail)
+            const collectionRef = collection(db, "jobs");
+            const docRef = await addDoc(collectionRef, jobDetail);
+            const docRefToUpdate = doc(db, "jobs", docRef.id);
+            await updateDoc(docRefToUpdate, { firebaseID: docRef.id });
+            toast.success("Blog Added Successfully!");
         } catch (error) {
             console.log(error);
-            console.log(companyLogo);
         }
     }
 
@@ -119,32 +122,13 @@ export default function CreateNewJob() {
                         <TextField required className='w-[49%]' id="outlined-basic" label="Job Position" variant="outlined" value={jobPosition} onChange={e => setJobPosition(e.target.value)} />
                         <TextField required className='w-[48%]' id="outlined-basic" label="Qualification" variant="outlined" value={qualification} onChange={e => setQualification(e.target.value)} />
                         <TextField required className='w-full' id="outlined-basic" label="Short Detail" variant="outlined" value={shortDetail} onChange={e => setShortDetail(e.target.value)} />
-                        {/* <Select
-                            className='w-[49%]'
-                            labelId="job-type-label"
-                            id="job-type-select"
-                            value={jobType}
-                            label="Job Type"
-                            onChange={(e) => setJobType(e.target.value)}
-                            defaultValue='jobType'
-                        // renderValue={(selected) => {
-                        //     if (!selected) {
-                        //         return <em>Job Type</em>;
-                        //     }
-                        //     return selected;
-                        // }}
-                        >
-                            <MenuItem disabled defaultValue="Job Type" value=""><em>Job Type</em></MenuItem>
-                            <MenuItem value="full time">Full Time</MenuItem>
-                            <MenuItem value="part time">Part Time</MenuItem>
-                            <MenuItem value="remote">Remote</MenuItem>
-                        </Select> */}
-                        <FormControl variant="outlined" className="w-full max-w-xs">
-                            <InputLabel>Filter</InputLabel>
+
+                        <FormControl variant="outlined" className="w-[49%]">
+                            <InputLabel>Job Type</InputLabel>
                             <Select
                                 value={jobType}
                                 onChange={(e) => setJobType(e.target.value)}
-                                label="Filter"
+                                label="Job Type"
                             >
                                 <MenuItem value="full time">Full Time</MenuItem>
                                 <MenuItem value="part time">Part Time</MenuItem>
@@ -153,14 +137,30 @@ export default function CreateNewJob() {
                         </FormControl>
                         <TextField required className='w-[48%]' id="outlined-basic" label="Salary Range" variant="outlined" value={salaryRange} onChange={e => setSalaryRange(e.target.value)} />
                         <TextField required className='w-full' id="outlined-basic" label="Company Address" variant="outlined" value={address} onChange={e => setAddress(e.target.value)} />
-                        <Textarea style={{ width: '100%' }} minRows={4} placeholder='Enter your Full Description..'
+                        <textarea
+                            style={{ width: '100%' }}
+                            rows={4}
+                            placeholder='Enter your Full Description..'
                             value={otherReq}
-                            onChange={e => setOtherReq(e.target.value)}
+                            onChange={(e) => {
+                                setOtherReq(e.target.value);
+                                console.log('otherReq:', e.target.value);
+                            }}
                         />
                         <button type='submit' className='w-full bg-[#926c00] py-2 rounded-full text-white hover:bg-white hover:border border-[#926c00] hover:text-[#926c00] transition-all'>Post</button>
 
                     </Grid>
                 </form>
+            </div>
+            <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between md:w-[60vw] mx-auto border border-gray-200 text-black max-h-[100%] mt-3 overflow-y-scroll">
+                <label htmlFor="tag" className="block text-sm font-bold mb-2">
+                    <span className="text-neutral">Text Output:</span>
+                </label>
+                <div className="p-2 h-full ">
+                    <ReactMarkdown>
+                        {otherReq}
+                    </ReactMarkdown>
+                </div>
             </div>
             <Footer />
         </>

@@ -6,7 +6,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -60,8 +60,43 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+} */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  font-weight: bold;
 }
 
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1em;
+  margin: 1.33em 0;
+  font-weight: bold;
+}
+
+h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 0.67em;
+  margin: 2.33em 0;
+  font-weight: bold;
+}
 /* @layer base {
   * {
     @apply border-border;

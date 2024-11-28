@@ -74,7 +74,7 @@ function CompanyHeader() {
 
     return (
         <AppBar position="fixed">
-            <Container className='bg-[#926c00]' maxWidth="xl">
+            <Container className='bg-[#926c00] !w-[100%]' maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
