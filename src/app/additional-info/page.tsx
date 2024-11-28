@@ -61,7 +61,7 @@ export default function AdditionalInfo() {
         <div className='flex items-center justify-center h-screen'>
             <div className='w-[30%] flex flex-col gap-5 border border-black px-14 py-14 relative'>
 
-                <h1 className='text-3xl font-bold text-center bg-white px-5 py-2 absolute top-[-25] left-[110] text-[#926c00]'>Other Info</h1>
+                <h1 className='text-3xl font-bold text-center bg-white px-5 py-2 absolute -top-[50px] left-[50%] right-[50%] -translate-x-[50%] text-[#926c00]'>Other Info</h1>
                 <FormControl variant="outlined">
                     <InputLabel>Signup as?</InputLabel>
                     <Select
