@@ -21,19 +21,9 @@ export default function Page() {
     const currentJobID = slug;
 
     useEffect(() => {
-        console.log(params);
-        console.log(slug);
-
-
-    }, [])
-
-
-
-    useEffect(() => {
         if (!currentJobID) return
 
         if (!slug) return
-        console.log("start");
 
         (async () => {
             try {

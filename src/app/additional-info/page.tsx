@@ -75,13 +75,6 @@ export default function AdditionalInfo() {
                         <MenuItem value='job seeker'>Job Seeker</MenuItem>
                     </Select>
                 </FormControl>
-                <Select
-                    value={role}
-                    required
-                    onChange={e => setRole(e.target.value as UserRole)}
-                >
-
-                </Select>
                 <button
                     className='w-full bg-[#926c00] py-2 rounded-full text-white hover:bg-white hover:border border-[#926c00] hover:text-[#926c00] transition-all'
                     onClick={handleRoleSelection}

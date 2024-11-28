@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/
 import { doc, setDoc } from 'firebase/firestore'
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export default function SignupPage() {
     const router = useRouter();
@@ -30,9 +31,9 @@ export default function SignupPage() {
             console.log("email not Verified");
             // Redirect to additional-info page
             router.push('/additional-info');
+            toast.success("authenticate to next step")
         } catch (e) {
             console.log("Error during signup:", e);
-            // Yahan aap error handling kar sakte hain, jaise ke user ko error message dikhana
         }
     }
 
