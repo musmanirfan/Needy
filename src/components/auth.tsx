@@ -52,9 +52,9 @@ export default function Auth({ signup, func }: AuthProps) {
         <div className='flex items-center justify-center h-screen'>
             <div className='w-[30%] flex flex-col gap-5 border border-black px-14 py-14 relative'>
                 {signup ? (
-                    <h1 className='text-3xl font-bold text-center bg-white px-5 py-2 absolute top-[-25] left-[130] text-[#926c00]'>SignUp</h1>
+                    <h1 className='text-3xl font-bold text-center bg-white w-fit px-5 py-2 absolute -top-[50px] left-[50%] right-[50%] -translate-x-[50%] text-[#926c00]'>SignUp</h1>
                 ) : (
-                    <h1 className='text-3xl font-bold text-center bg-white px-5 py-2 absolute top-[-25] left-[140] text-[#926c00]'>Login</h1>
+                    <h1 className='text-3xl font-bold text-center bg-white w-fit px-5 py-2 absolute -top-[50px] left-[50%] right-[50%] -translate-x-[50%] text-[#926c00]'>Login</h1>
                 )}
                 {signup && (
                     <TextField
