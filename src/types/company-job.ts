@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 export type Job = {
+    id?: string,
     firebaseID?: string;
     companyName: string,
     jobPosition: string;

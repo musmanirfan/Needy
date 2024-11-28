@@ -1,4 +1,6 @@
-export const checkDateDifference = (firestoreTimestamp: { toDate: () => any; }) => {
+import { Timestamp } from "firebase/firestore";
+
+export const checkDateDifference = (firestoreTimestamp: Timestamp) => {
     const today = new Date(); // Current date
     const savedDate = firestoreTimestamp.toDate(); // Convert Firestore Timestamp to JS Date
 

@@ -9,18 +9,20 @@ import Footer from '@/components/footer';
 import { Job } from '@/types/company-job';
 import { db } from '@/firebase/firebaseConfig';
 import CompanyHeader from '@/components/companyHeader';
+import { useParams } from 'next/navigation';
 
 
 
-export default function Page({ params }: { params: { id: string } }) {
-    const { id } = params
+export default function Page() {
+    const params = useParams();
+    const slug = params.slug;
     const [data, setData] = useState<Job | null>(null);
     const [loading, setLoading] = useState(true)
-    const currentJobID = id;
+    const currentJobID = slug;
 
     useEffect(() => {
         console.log(params);
-        console.log(id);
+        console.log(slug);
 
 
     }, [])
@@ -30,25 +32,24 @@ export default function Page({ params }: { params: { id: string } }) {
     useEffect(() => {
         if (!currentJobID) return
 
-        if (id) {
-            console.log("start");
+        if (!slug) return
+        console.log("start");
 
-            (async () => {
-                try {
-                    const q = query(collection(db, "jobs"), where("firebaseID", "==", id))
-                    const querySnapshot = await getDocs(q);
-                    querySnapshot.forEach((doc) => {
-                        const docData = doc.data() as Job;
-                        setData(docData);
-                        setLoading(false)
-                    })
-                } catch (e) {
-                    console.log(e);
+        (async () => {
+            try {
+                const q = query(collection(db, "jobs"), where("firebaseID", "==", slug))
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    const docData = doc.data() as Job;
+                    setData(docData);
                     setLoading(false)
-                }
-            })()
-        }
-    }, [id])
+                })
+            } catch (e) {
+                console.log(e);
+                setLoading(false)
+            }
+        })()
+    }, [slug])
     return (
         <>
             <CompanyHeader />
