@@ -17,7 +17,7 @@ export default function Page() {
     const params = useParams();
     const slug = params.slug;
     const [data, setData] = useState<Job | null>(null);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const currentJobID = slug;
 
     useEffect(() => {
