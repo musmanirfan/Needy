@@ -86,9 +86,9 @@ export default function Company() {
       <CompanyHeader />
       {!loading ? (
         <>
-          <div className='flex mt-36 justify-center mb-20'>
-            <div className="w-[25%] justify-end">
-              <div className="search-bar w-[90%]">
+          <div className='flex mt-24 justify-center mb-20'>
+            <div className="w-[25%] flex flex-col gap-4">
+              <div className="search-bar w-[90%] h-fit">
                 <TextField
                   fullWidth
                   variant="outlined"
@@ -126,7 +126,7 @@ export default function Company() {
                   }}
                 />
               </div>
-              <div>
+              <div className='h-fit'>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">Filter by JobType:</h3>
                 <div className="flex flex-wrap gap-3">
                   {tags.map(tag => (
@@ -143,6 +143,9 @@ export default function Company() {
                     </button>
                   ))}
                 </div>
+              </div>
+              <div className='h-fit mt-5'>
+                <Image className='sm:h-[300px] sm:w-[300px]' src="/add-1.png" alt='add-1' height={50} width={50} unoptimized/>
               </div>
             </div>
             <div className="w-[70%] flex flex-col gap-6 justify-start">{filteredCards?.map(({
