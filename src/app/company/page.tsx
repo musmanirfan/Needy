@@ -86,9 +86,9 @@ export default function Company() {
       <CompanyHeader />
       {!loading ? (
         <>
-          <div className='flex mt-24 justify-center mb-20'>
+          <div className='flex mt-24 mx-10 gap-10 justify-center mb-20'>
             <div className="w-[25%] flex flex-col gap-4">
-              <div className="search-bar w-[90%] h-fit">
+              <div className="search-bar w-[95%] h-fit">
                 <TextField
                   fullWidth
                   variant="outlined"
@@ -148,7 +148,7 @@ export default function Company() {
                 <Image className='sm:h-[300px] sm:w-[300px]' src="/add-1.png" alt='add-1' height={50} width={50} unoptimized/>
               </div>
             </div>
-            <div className="w-[70%] flex flex-col gap-6 justify-start">{filteredCards?.map(({
+            <div className="w-[75%] flex flex-col gap-6 justify-start">{filteredCards?.map(({
               firebaseID,
               companyName,
               companyLogo,
@@ -158,7 +158,7 @@ export default function Company() {
               salaryRange,
               shortDetail }, i) => {
               return (
-                <div key={companyName + i} className="group grid max-w-screen-md grid-cols-12 space-x-8 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg">
+                <div key={companyName + i} className="group grid max-w-[90%] grid-cols-12 space-x-8 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg">
                   <Link href={`/company/job/${firebaseID}`} className="order-2 col-span-1 mt-4 -ml-14 text-left text-gray-600 hover:text-gray-700 sm:-order-1 sm:ml-4">
                     <div className="group relative h-16 w-16 overflow-hidden rounded-full border border-gray-300 flex items-center justify-center">
                       <Image src={companyLogo} width={50} height={50} alt={companyName} unoptimized />

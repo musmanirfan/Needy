@@ -92,7 +92,7 @@ export default function Auth({ signup, func }: AuthProps) {
                     className='w-full hover:bg-[#926c00] py-2 rounded-full hover:text-white bg-white border border-[#926c00] text-[#926c00] transition-all'
                     onClick={handleGoogleSignup}
                 >
-                    {signup ? 'SignUp with Google' : 'SignIn with Google'}
+                    Continue with Google
                 </button>
                 {signup ? (
                     <div className='flex gap-2'>
